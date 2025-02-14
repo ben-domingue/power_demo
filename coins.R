@@ -59,6 +59,8 @@ for (i in 1:length(p)) {
         lty<-1
     } else lty<-2
     lines(N,m0$fitted,lty=lty,col=cols[i])
+    nn<-length(N)
+    text(N[nn],m0$fitted[nn],.5+as.numeric(names(p)[i]),pos=4,cex=.85)
 }
 
 
