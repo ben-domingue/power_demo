@@ -5,6 +5,7 @@ f<-function(N,delta) {
     df<-data.frame(gr=gr,x=x)
     m<-lm(x~gr,df)
     p<-summary(m)$coef[2,4]
+    ##p2<-t.test(df$x[df$gr==0],df$x[df$gr==1])$p.value
     c(delta,p)
 }
 
@@ -34,4 +35,6 @@ for (i in 1:length(L)) {
 ii<-rev(c(1,length(L)))
 legend("topleft",bty='n',legend=names(L)[ii],fill=cols[ii],title="Glass's delta")
 
-do.call("rbind",tab))
+z<-do.call("rbind",tab)
+
+
