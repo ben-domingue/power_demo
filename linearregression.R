@@ -26,3 +26,4 @@ for (i in 1:length(L)) {
     m0<-loess(x[,2]<.05 ~ N)
     lines(N,m0$fitted,lty=1,col=cols[i])
 }
+legend("right",bty='n',legend=names(L),fill=cols,title="Correlation")

@@ -5,12 +5,33 @@ pbinom(600-1,1000,.5,lower.tail=FALSE)
 #########################################################
 f<-function(N,bias=.5) {
     x<-rbinom(N,1,bias)
-                                        #m<-lm(x~1)
-                                        #est<-summary(m)$coef[1,]
-                                        #z<-(est[1]-0.5)/est[2]
-                                        #p<-pnorm(abs(z),lower.tail=FALSE)
-                                        #2*p #two-tailed test
-    2*pbinom(sum(x)-1,length(x),.5,lower.tail=FALSE)
+    2*pbinom(sum(x)-1,length(x),.5,lower.tail=ifelse(mean(x)>.5,FALSE,TRUE))
+}
+
+set.seed(10101)
+N<-100
+x<-rbinom(N,1,.57)
+sum(x)
+2*pbinom(sum(x)-1,length(x),.5,lower.tail=FALSE)
+N<-100
+x<-rbinom(N,1,.57)
+sum(x)
+2*pbinom(sum(x)-1,length(x),.5,lower.tail=FALSE)
+N<-rep(100,50000)
+mean(sapply(N,f,bias=.57)<.05)
+
+par(mfrow=c(1,3),mgp=c(2,1,0),mar=c(3,3,1,1),oma=rep(.5,4))
+for (n in c(50,500,5000)) {
+    out<-list()
+    for (i in 1:10000) {
+        x<-rbinom(n,1,.57)
+        x0<-rbinom(n,1,.5)
+        out[[i]]<-c(mean(x),mean(x0))
+    }
+    x<-do.call('rbind',out)
+    plot(density(x[,2]),xlim=c(0,1),yaxt='n',main='',sub='',xlab='Average')
+    lines(density(x[,1]),col='red')
+    abline(v=.5)
 }
 
 #########################################################
