@@ -39,6 +39,18 @@ par(mgp=c(2,1,0))
 plot(NULL,xlim=c(10,1100),ylim=0:1,xlab="# tosses",ylab="Proportion of times that I reject the null")
 abline(h=.05,col='gray')
 cols<-colorRampPalette(c("blue", "red"))( length(p))
+for (i in 8) {
+    m0<-loess(p[[i]]<.05 ~ N)
+    lines(N,m0$fitted,lty=1,col=cols[i])
+    nn<-length(N)
+    text(N[nn],m0$fitted[nn],.5+as.numeric(names(p)[i]),pos=4,cex=.85)
+}
+
+
+par(mgp=c(2,1,0))
+plot(NULL,xlim=c(10,1100),ylim=0:1,xlab="# tosses",ylab="Proportion of times that I reject the null")
+abline(h=.05,col='gray')
+cols<-colorRampPalette(c("blue", "red"))( length(p))
 for (i in 1:length(p)) {
     m0<-loess(p[[i]]<.05 ~ N)
     lines(N,m0$fitted,lty=1,col=cols[i])

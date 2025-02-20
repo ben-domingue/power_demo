@@ -5,7 +5,6 @@ f<-function(N,delta) {
     df<-data.frame(gr=gr,x=x)
     m<-lm(x~gr,df)
     p<-summary(m)$coef[2,4]
-    ##p2<-t.test(df$x[df$gr==0],df$x[df$gr==1])$p.value
     c(delta,p)
 }
 
